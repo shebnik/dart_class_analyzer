@@ -26,7 +26,7 @@ class DartClassAnalyzer {
   List<ClassModel> countMethodsInFolder(
     String path, {
     bool enableGenerated = false,
-    bool output = false,
+    bool verbose = false,
   }) {
     final dir = Directory(path);
     if (!dir.existsSync()) {
@@ -42,7 +42,7 @@ class DartClassAnalyzer {
     for (final file in files) {
       final dartCode = file.readAsStringSync();
       final classModel = countMethodsInClass(dartCode);
-      if (output) {
+      if (verbose) {
         _log.info('${file.path}: ${classModel?.methodCount}');
       }
       if (classModel != null) {

@@ -10,10 +10,14 @@ Dart Class Analyzer is a Dart package that provides tools for analyzing Dart cla
 
 - [Introduction](#dart-class-analyzer)
 - [Installation](#installation-💻)
+  - [Install it as a CLI](#install-it-as-a-cli)
+  - [Install it as a library](#install-it-as-a-library)
 - [Usage](#usage)
-  - [Count Methods in Folder](#count-methods-in-folder)
-  - [Count Methods in Class](#count-methods-in-class)
-  - [Analyze Class](#analyze-class)
+  - [Use it as a CLI](#use-it-as-a-cli)
+  - [Use it as a library](#use-it-as-a-library)
+    - [Count Methods in Folder](#count-methods-in-folder)
+    - [Count Methods in Class](#count-methods-in-class)
+    - [Analyze Class](#analyze-class)
 - [Continuous Integration](#continuous-integration-🤖)
 - [Running Tests](#running-tests-🧪)
 - [Contributing](#contributing)
@@ -23,7 +27,7 @@ Dart Class Analyzer is a Dart package that provides tools for analyzing Dart cla
 
 **❗ In order to start using Dart Class Analyzer, you must have the [Dart SDK][dart_install_link] installed on your machine.**
 
-### Use it as a CLI
+### Install it as a CLI
 
 Activate the package with:
 
@@ -31,7 +35,7 @@ Activate the package with:
 dart pub global activate dart_class_analyzer
 ```
 
-### Use it as a library
+### Install it as a library
 
 Install via `dart pub add`:
 
@@ -43,14 +47,22 @@ dart pub add dart_class_analyzer
 
 ### Usage
 
-### Use it as a CLI
+#### Use it as a CLI
 
 Count the methods in a project with:
 ```sh
 dart pub global run dart_class_analyzer:method_counter [options] <project_lib_path>
 ```
 
-### Use it as an library
+##### CLI Options:
+
+- **-v** If provided, analyzer will output all files and their method counts.
+
+- **-g** If provided, analyzer will include generated `.g.dart` files in the analysis.
+
+- **-h** If provided, analyzer will display usage help.
+
+#### Use it as an library
 
 1. Import the `dart_class_analyzer` package.
 

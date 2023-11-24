@@ -1,3 +1,6 @@
+# 0.1.4
+- feat: Added verbose output.
+
 # 0.1.3
 - fix: Improved logging output.
 

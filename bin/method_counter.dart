@@ -13,7 +13,7 @@ void main(List<String> arguments) {
   final log = Logger('method_counter');
 
   final argParser = ArgParser()
-    ..addFlag('output', abbr: 'o', help: 'Enable output')
+    ..addFlag('verbose', abbr: 'v', help: 'Verbose output')
     ..addFlag('generated', abbr: 'g', help: 'Enable generated')
     ..addFlag('help', abbr: 'h', help: 'Show usage help');
 
@@ -39,17 +39,23 @@ void main(List<String> arguments) {
   final projectPath = argResults.rest[0];
 
   try {
+    final enableGenerated = argResults['generated'] as bool? ?? false;
+    final verbose = argResults['verbose'] as bool? ?? false;
+
     final classModelList = DartClassAnalyzer().countMethodsInFolder(
       projectPath,
-      enableGenerated: argResults['generated'] as bool? ?? true,
-      output: argResults['output'] as bool? ?? false,
+      enableGenerated: enableGenerated,
+      verbose: verbose,
     );
 
     var totalMethods = 0;
     for (final classModel in classModelList) {
       totalMethods += classModel.methodCount;
     }
-
+    if (!verbose) {
+      log.info(totalMethods);
+      exit(0);
+    }
     log.info('Number of methods in $projectPath: $totalMethods');
   } catch (e) {
     log.severe('Error:', e);
