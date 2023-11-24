@@ -82,9 +82,8 @@ class DartClassAnalyzer {
     return classList;
   }
 
-
   /// Count methods in a Dart classes represented by the provided Dart code.
-  /// 
+  ///
   /// This method parses the Dart code and returns a [ClassModel] instance
   /// representing the class and its method count. If no class with methods
   /// is found, it returns empty.
