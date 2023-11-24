@@ -1,6 +1,7 @@
 name: dart_class_analyzer
 description: Dart Class Analyzer
 version: 0.1.0
+homepage: https://github.com/shebnik/dart_class_analyzer
 
 
 environment:

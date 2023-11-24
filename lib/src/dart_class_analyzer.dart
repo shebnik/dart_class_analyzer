@@ -10,13 +10,12 @@ import 'package:dart_class_analyzer/model/class_model.dart';
 ///
 /// This class provides methods for analyzing Dart classes and methods.
 class DartClassAnalyzer {
-
   /// Count methods in the specified folder.
   ///
   /// This method analyzes all Dart files in the given folder and returns a
   /// list of [ClassModel] instances representing the classes and method counts.
   ///
-  /// If [excludeGenerated] is true, generated files (e.g., '.g.dart') will be 
+  /// If [excludeGenerated] is true, generated files (e.g., '.g.dart') will be
   /// excluded.
   List<ClassModel> countMethodsInFolder(
     String path, {
