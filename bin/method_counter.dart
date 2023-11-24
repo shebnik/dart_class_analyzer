@@ -8,7 +8,7 @@ void main(List<String> arguments) {
   Logger.root.level = Level.ALL;
   Logger.root.onRecord.listen((record) {
     // ignore: avoid_print
-    print('${record.level.name}: ${record.time}: ${record.message}');
+    print(record.message);
   });
   final log = Logger('method_counter');
 

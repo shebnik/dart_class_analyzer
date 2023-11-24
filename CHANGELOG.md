@@ -1,3 +1,6 @@
+# 0.1.3
+- fix: Improved logging output.
+
 # 0.1.2
 Updated README
 
