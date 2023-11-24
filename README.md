@@ -23,6 +23,16 @@ Dart Class Analyzer is a Dart package that provides tools for analyzing Dart cla
 
 **❗ In order to start using Dart Class Analyzer, you must have the [Dart SDK][dart_install_link] installed on your machine.**
 
+### Use it as a CLI
+
+Activate the package with:
+
+```sh
+dart pub global activate dart_class_analyzer
+```
+
+### Use it as a library
+
 Install via `dart pub add`:
 
 ```sh
@@ -34,13 +44,9 @@ dart pub add dart_class_analyzer
 ### Usage
 
 ### Use it as a CLI
-Activate the package with:
 
-```
-dart pub global activate dart_class_analyzer
-```
 Count the methods in a project with:
-```
+```sh
 method_counter [options] <project_lib_path>
 ```
 
