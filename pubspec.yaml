@@ -1,8 +1,17 @@
 name: dart_class_analyzer
 description: Dart Class Analyzer
-version: 0.1.0
+version: 0.1.1
 homepage: https://github.com/shebnik/dart_class_analyzer
+executables:
+  count_methods: method_counter
 
+platforms:
+  android:
+  ios:
+  linux:
+  macos:
+  web:
+  windows:
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -13,4 +22,6 @@ dev_dependencies:
   very_good_analysis: ^5.1.0
 dependencies:
   analyzer: ^6.3.0
+  args: ^2.4.2
   collection: ^1.18.0
+  logging: ^1.2.0

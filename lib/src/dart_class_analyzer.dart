@@ -5,21 +5,28 @@ import 'package:analyzer/dart/analysis/utilities.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:collection/collection.dart';
 import 'package:dart_class_analyzer/model/class_model.dart';
+import 'package:logging/logging.dart';
 
 /// Dart Class Analyzer
 ///
 /// This class provides methods for analyzing Dart classes and methods.
 class DartClassAnalyzer {
+  /// Create a new instance of [DartClassAnalyzer].
+  DartClassAnalyzer() : _log = Logger('DartClassAnalyzer');
+
+  final Logger _log;
+
   /// Count methods in the specified folder.
   ///
   /// This method analyzes all Dart files in the given folder and returns a
   /// list of [ClassModel] instances representing the classes and method counts.
   ///
-  /// If [excludeGenerated] is true, generated files (e.g., '.g.dart') will be
-  /// excluded.
+  /// If [enableGenerated] is true, generated files (e.g., '.g.dart') will be
+  /// included.
   List<ClassModel> countMethodsInFolder(
     String path, {
-    bool excludeGenerated = true,
+    bool enableGenerated = false,
+    bool output = false,
   }) {
     final dir = Directory(path);
     if (!dir.existsSync()) {
@@ -29,12 +36,15 @@ class DartClassAnalyzer {
 
     final files = dir.listSync(recursive: true).whereType<File>().where((file) {
       return file.path.endsWith('.dart') &&
-          (!excludeGenerated || !file.path.contains('.g.dart'));
+          (enableGenerated || !file.path.contains('.g.dart'));
     });
 
     for (final file in files) {
       final dartCode = file.readAsStringSync();
       final classModel = countMethodsInClass(dartCode);
+      if (output) {
+        _log.info('${file.path}: ${classModel?.methodCount}');
+      }
       if (classModel != null) {
         classCount = [...classCount, classModel];
       }
@@ -51,15 +61,11 @@ class DartClassAnalyzer {
   ClassModel? countMethodsInClass(String dartCode) {
     final unit = parseString(content: dartCode).unit;
 
-    final classDeclaration = unit.declarations
-        .whereType<ClassDeclaration>()
-        .firstWhereOrNull((classDeclaration) {
-      return classDeclaration.members.whereType<MethodDeclaration>().isNotEmpty;
-    });
+    final classDeclaration =
+        unit.declarations.whereType<ClassDeclaration>().firstOrNull;
     if (classDeclaration == null) {
       return null;
     }
-
     final methodCount =
         classDeclaration.members.whereType<MethodDeclaration>().length;
     final className = classDeclaration.name.toString();

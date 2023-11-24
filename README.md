@@ -33,6 +33,19 @@ dart pub add dart_class_analyzer
 
 ### Usage
 
+### Use it as a CLI
+Activate the package with:
+
+```
+dart pub global activate dart_class_analyzer
+```
+Count the methods in a project with:
+```
+method_counter [options] <project_lib_path>
+```
+
+### Use it as an library
+
 1. Import the `dart_class_analyzer` package.
 
 ```dart
