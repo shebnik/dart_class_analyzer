@@ -47,7 +47,7 @@ dart pub add dart_class_analyzer
 
 Count the methods in a project with:
 ```sh
-method_counter [options] <project_lib_path>
+dart pub global run dart_class_analyzer:method_counter [options] <project_lib_path>
 ```
 
 ### Use it as an library
