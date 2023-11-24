@@ -50,7 +50,8 @@ void main() {
 
   test('countMethodsInFolder returns correct class models', () {
     final analyzer = DartClassAnalyzer();
-    final classModels = analyzer.countMethodsInFolder('test/src/test_data', output: true);
+    final classModels =
+        analyzer.countMethodsInFolder('test/src/test_data', output: true);
 
     expect(classModels, isNotNull);
     expect(classModels.length, 2);

@@ -7,7 +7,7 @@ Updated README
 
 # 0.1.0
 
-- feat: Inital release 🎉
+- feat: initial release 🎉
 
 # 0.1.0+1
 
