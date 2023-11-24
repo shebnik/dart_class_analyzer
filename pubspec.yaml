@@ -1,6 +1,6 @@
 name: dart_class_analyzer
 description: Dart Class Analyzer
-version: 0.1.4
+version: 0.1.5
 homepage: https://github.com/shebnik/dart_class_analyzer
 executables:
   count_methods: method_counter

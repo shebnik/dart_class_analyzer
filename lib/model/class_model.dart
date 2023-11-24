@@ -16,4 +16,9 @@ class ClassModel {
 
   /// The number of methods in the Dart class.
   final int methodCount;
+
+  @override
+  String toString() {
+    return '$className: $methodCount';
+  }
 }

@@ -12,11 +12,11 @@ void main() {
           void method2() {}
         }
       ''';
-      final classModel = analyzer.countMethodsInClass(code);
+      final classModel = analyzer.countMethodsInString(code);
 
       expect(classModel, isNotNull);
-      expect(classModel!.className, 'TestClass');
-      expect(classModel.methodCount, 2);
+      expect(classModel[0].className, 'TestClass');
+      expect(classModel[0].methodCount, 2);
     });
 
     test('countMethodsInClass handles class without methods', () {
@@ -24,11 +24,11 @@ void main() {
       const code = '''
         class EmptyClass {}
       ''';
-      final classModel = analyzer.countMethodsInClass(code);
+      final classModel = analyzer.countMethodsInString(code);
 
       expect(classModel, isNotNull);
-      expect(classModel!.className, 'EmptyClass');
-      expect(classModel.methodCount, 0);
+      expect(classModel[0].className, 'EmptyClass');
+      expect(classModel[0].methodCount, 0);
     });
 
     test('countMethodsInClass handles multiple methods in a class', () {
@@ -40,11 +40,11 @@ void main() {
           void methodC() {}
         }
       ''';
-      final classModel = analyzer.countMethodsInClass(code);
+      final classModel = analyzer.countMethodsInString(code);
 
       expect(classModel, isNotNull);
-      expect(classModel!.className, 'AnotherTestClass');
-      expect(classModel.methodCount, 3);
+      expect(classModel[0].className, 'AnotherTestClass');
+      expect(classModel[0].methodCount, 3);
     });
   });
 

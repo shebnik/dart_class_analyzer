@@ -3,7 +3,6 @@ import 'dart:mirrors';
 
 import 'package:analyzer/dart/analysis/utilities.dart';
 import 'package:analyzer/dart/ast/ast.dart';
-import 'package:collection/collection.dart';
 import 'package:dart_class_analyzer/model/class_model.dart';
 import 'package:logging/logging.dart';
 
@@ -32,7 +31,7 @@ class DartClassAnalyzer {
     if (!dir.existsSync()) {
       return [];
     }
-    var classCount = <ClassModel>[];
+    var classList = <ClassModel>[];
 
     final files = dir.listSync(recursive: true).whereType<File>().where((file) {
       return file.path.endsWith('.dart') &&
@@ -40,40 +39,81 @@ class DartClassAnalyzer {
     });
 
     for (final file in files) {
-      final dartCode = file.readAsStringSync();
-      final classModel = countMethodsInClass(dartCode);
-      if (verbose) {
-        _log.info('${file.path}: ${classModel?.methodCount}');
-      }
-      if (classModel != null) {
-        classCount = [...classCount, classModel];
+      final classModel = countMethodsInFile(file, verbose: verbose);
+      if (classModel.isNotEmpty) {
+        classList = [...classList, ...classModel];
       }
     }
 
-    return classCount;
+    return classList;
   }
 
-  /// Count methods in a Dart class represented by the provided Dart code.
+  /// Count methods in a Dart classes represented by the provided Dart file.
   ///
   /// This method parses the Dart code and returns a [ClassModel] instance
   /// representing the class and its method count. If no class with methods
-  /// is found, it returns null.
-  ClassModel? countMethodsInClass(String dartCode) {
+  /// is found, it returns empty.
+  List<ClassModel> countMethodsInFile(
+    File file, {
+    bool verbose = false,
+  }) {
+    final dartCode = file.readAsStringSync();
     final unit = parseString(content: dartCode).unit;
 
-    final classDeclaration =
-        unit.declarations.whereType<ClassDeclaration>().firstOrNull;
-    if (classDeclaration == null) {
-      return null;
+    final classDeclarations = unit.declarations.whereType<ClassDeclaration>();
+    if (classDeclarations.isEmpty) {
+      if (verbose) {
+        _log.info('No class declarations found in file ${file.path}');
+      }
+      return [];
     }
-    final methodCount =
-        classDeclaration.members.whereType<MethodDeclaration>().length;
-    final className = classDeclaration.name.toString();
+    var classList = <ClassModel>[];
+    for (final classDeclaration in classDeclarations) {
+      final classModel = ClassModel(
+        className: classDeclaration.name.toString(),
+        methodCount:
+            classDeclaration.members.whereType<MethodDeclaration>().length,
+      );
+      classList = [...classList, classModel];
+      if (verbose) {
+        _log.info('${file.path}: $classModel');
+      }
+    }
+    return classList;
+  }
 
-    return ClassModel(
-      className: className,
-      methodCount: methodCount,
-    );
+
+  /// Count methods in a Dart classes represented by the provided Dart code.
+  /// 
+  /// This method parses the Dart code and returns a [ClassModel] instance
+  /// representing the class and its method count. If no class with methods
+  /// is found, it returns empty.
+  List<ClassModel> countMethodsInString(
+    String dartcode, {
+    bool verbose = false,
+  }) {
+    final unit = parseString(content: dartcode).unit;
+
+    final classDeclarations = unit.declarations.whereType<ClassDeclaration>();
+    if (classDeclarations.isEmpty) {
+      if (verbose) {
+        _log.info('No class declarations found in String');
+      }
+      return [];
+    }
+    var classList = <ClassModel>[];
+    for (final classDeclaration in classDeclarations) {
+      final classModel = ClassModel(
+        className: classDeclaration.name.toString(),
+        methodCount:
+            classDeclaration.members.whereType<MethodDeclaration>().length,
+      );
+      classList = [...classList, classModel];
+      if (verbose) {
+        _log.info('$classModel');
+      }
+    }
+    return classList;
   }
 
   /// Analyze methods in a Dart class represented by the provided type.

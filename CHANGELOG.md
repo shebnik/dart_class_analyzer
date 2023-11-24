@@ -1,3 +1,6 @@
+# 0.1.5
+- feat: Improved method counting by using multiple classes in one file.
+
 # 0.1.4
 - feat: Added verbose output.
 
