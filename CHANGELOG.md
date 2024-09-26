@@ -1,3 +1,6 @@
+# 0.1.6
+- fix: Fixed error while parsing file in `countMethodsInFile` method.
+
 # 0.1.5
 - feat: Improved method counting by using multiple classes in one file.
 
