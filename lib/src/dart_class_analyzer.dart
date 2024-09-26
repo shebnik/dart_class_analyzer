@@ -58,7 +58,15 @@ class DartClassAnalyzer {
     bool verbose = false,
   }) {
     final dartCode = file.readAsStringSync();
-    final unit = parseString(content: dartCode).unit;
+    CompilationUnit unit;
+    try {
+      unit = parseString(content: dartCode).unit;
+    } catch (e, s) {
+      if (verbose) {
+        _log.severe('Error parsing file ${file.path}', e, s);
+      }
+      return [];
+    }
 
     final classDeclarations = unit.declarations.whereType<ClassDeclaration>();
     if (classDeclarations.isEmpty) {

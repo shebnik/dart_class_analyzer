@@ -6,10 +6,21 @@ import 'package:logging/logging.dart';
 
 void main(List<String> arguments) {
   Logger.root.level = Level.ALL;
-  Logger.root.onRecord.listen((record) {
-    // ignore: avoid_print
-    print(record.message);
-  });
+  Logger.root.onRecord.listen(
+    (record) {
+      if (record.level > Level.INFO) {
+        // ignore: lines_longer_than_80_chars, avoid_print
+        print('${record.level.name}: ${record.time}: ${record.message} ${record.error} ${record.stackTrace}');
+        return;
+      }
+      // ignore: avoid_print
+      print(record.message);
+    },
+    onError: (Object e, StackTrace s) {
+      // ignore: avoid_print
+      print('Error occured: $e\n$s');
+    },
+  );
   final log = Logger('method_counter');
 
   final argParser = ArgParser()
@@ -57,8 +68,8 @@ void main(List<String> arguments) {
       exit(0);
     }
     log.info('Number of methods in $projectPath: $totalMethods');
-  } catch (e) {
-    log.severe('Error:', e);
+  } catch (e, s) {
+    log.severe('Error:', e, s);
     exit(1);
   }
 }
